@@ -1,0 +1,90 @@
+
+	Adding Characters to the Scene
+	- - -
+	The code written for this demo automatically scans 
+	for characters on the field and adds them to the UI,
+	as long as they have the proper scripts attached
+	and the steps below are followed.
+
+	(Ignore the health bars for the player characters
+	 right now, they still haven't been properly
+	 implemented.)
+	- - -
+
+
+1a.	If you are adding a player character to the field,
+
+	From the Scripts folder in the Project window, 
+	drag the script called HeroStateMachine to the 
+	character's Inspector window.
+	
+	After that, from the Assets folder in the Project
+	window, drag a Selector prefab into the Hierarchy 
+	window underneath the character as a child. 
+
+	Go to the Selector's Inspector window and make 
+	sure that the box next to the Selector's name is 
+	unchecked; this will make it so that it stays 
+	invisible until it's that character's turn.
+
+	Make sure that the tag underneath the character's 
+	name in the Inspector window is set to "Hero".
+
+	In the Inspector window for the player character,
+	scroll down to where it says 
+	Hero State Machine (Script). From the Hierarchy 
+	window, drag the character's Selector to where it 
+	says Selector in the script. 
+
+	If a Selector hasn't been attached, it should say
+	"None (Game Object)".
+	
+
+
+1b.	If adding an enemy character,
+
+	From the Scripts folder in the Project window, 
+	drag the script called EnemyStateMachine to the 
+	character's Inspector window.
+
+	In the Inspector window for the enemy character, 
+	make sure that the tag underneath the character's 
+	name is set to "Enemy".
+
+	In the Inspector window for the enemy character,
+	scroll down to where it says 
+	Enemy State Machine (Script). Fill in the Name so 
+	that it exactly matches the character's name in the 
+	Inspector and Hierarchy windows.
+	
+
+
+2.	Step 2 applies to both enemies 
+	and player characters.
+
+	[In the Hierarchy window, make sure	
+	[that no two characters have exactly	]
+	[the same name, even if they are of	]
+	[the same type.			]
+
+	After adding the scripts, scroll down the 
+	character's Inspector window to the 
+	State Machine script.
+	
+	The characters take their turns based on 
+	the Priority value in the State Machine scripts, 
+	so that needs to be
+	filled in as well.
+
+	* The Main character's Priority should always be 0.
+	
+	* We're going with a maximum party size of 
+	  5 right now, so party members' Priorty should be 
+	  set from 2 - 5.
+
+	* Enemies' Priority should start from 11+.
+
+	[Make sure that no two characters have 	]
+	[the same priority.			]
+
+
