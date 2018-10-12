@@ -8,6 +8,16 @@ public class EnemySelectButton : MonoBehaviour
 
     public void SelectEnemy()
     {
-        GameObject.Find("BattleManager").GetComponent<BattleStateMachine>().Input2(EnemyPrefab);   // save input of enemy prefab
+        GameObject.Find("BattleManager").GetComponent<BattleStateMachine>().PlayerTargetInput(EnemyPrefab);   // save input of enemy prefab
+    }
+
+    public void ShowSelector()
+    {
+        EnemyPrefab.transform.Find("Selector").gameObject.SetActive(true);
+    }
+
+    public void HideSelector()
+    {
+        EnemyPrefab.transform.Find("Selector").gameObject.SetActive(false);
     }
 }

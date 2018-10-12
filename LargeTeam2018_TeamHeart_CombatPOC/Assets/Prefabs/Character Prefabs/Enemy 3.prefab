@@ -28,7 +28,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4022473858791174
 Transform:
   m_ObjectHideFlags: 1
@@ -97,19 +97,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemy:
     Name: Enemy 3
-    EnemyType: 1
-    EnemyRarity: 0
+    TurnPriority: 0
+    ActionSet: 0
+    PerformedAction: 0
+    Selector: {fileID: 0}
+    Attacks: []
     BaseHP: 20
     CurrentHP: 20
     BaseMP: 10
     CurrentMP: 10
-    Stamina: 0
-    Intellect: 0
-    Dexterity: 0
-    Agility: 0
     BaseATK: 5
     CurrentATK: 5
     BaseDEF: 6
     CurrentDEF: 6
+    Stamina: 0
+    Intellect: 0
+    Dexterity: 0
+    Agility: 0
+    EnemyType: 1
+    EnemyRarity: 0
   CurrentState: 0
+  Selector: {fileID: 1502518193058484, guid: bcf6807849bc51549a299f7d6abd5a5f, type: 2}
   HeroToAttack: {fileID: 0}

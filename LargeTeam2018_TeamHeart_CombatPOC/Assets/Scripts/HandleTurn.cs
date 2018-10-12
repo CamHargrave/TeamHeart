@@ -6,10 +6,19 @@ using UnityEngine;
 public class HandleTurn
 {
     public string Type;
-    public string Attacker; // name of attacker
-    public GameObject AttackersGameObject;  // who attacks
-    public GameObject AttackersTarget;      // who gets attacked
-    public int Priority;    // the turn priority of the attacker
 
+    public string AttackersName; 
+    // name of attacker
+
+    public GameObject AttackersGameObject;  
+    // who attacks
+
+    public GameObject AttackersTarget;      
+    // who gets attacked
+
+    public int TurnPriority;
+    // the turn priority of the attacker
+
+    public BaseAttack ChosenAttack;
     // which attack is performed
 }

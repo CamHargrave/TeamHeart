@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class BattleStateMachine : MonoBehaviour
 {
     // The three stages of the State Machine
-    public enum PerformAction
+    public enum ActionState
     {
         WAIT,           // Waiting for input form the character objects
 
@@ -21,7 +21,8 @@ public class BattleStateMachine : MonoBehaviour
 
         PERFORMACTION   // Currently a Placholder State
     }
-    public PerformAction BattleStates;
+
+    public ActionState BattleState;
 
     // HandleTurn is a class object holding the information of
     // the current actor and their target
@@ -29,15 +30,15 @@ public class BattleStateMachine : MonoBehaviour
     // This list manages which character is
     // next in line to perform an action
     //
-    public List<HandleTurn> PerformList = new List<HandleTurn>();
+    public List<HandleTurn> PerformersList = new List<HandleTurn>();
 
-    public List<HandleTurn> ExecutePerformList = new List<HandleTurn>();
+    public List<HandleTurn> ExecutePerformersList = new List<HandleTurn>();
 
     // A list of all the player characters currently on the field
-    public List<GameObject> HerosInBattle = new List<GameObject>();
+    public List<GameObject> HeroesInBattle = new List<GameObject>();
 
     // A list of all the enemy characters currently on the field
-    public List<GameObject> EnemysInBattle = new List<GameObject>();
+    public List<GameObject> EnemiesInBattle = new List<GameObject>();
 
     // A combined list of all characters on the field
     public List<GameObject> CharactersInBattle = new List<GameObject>();
@@ -47,7 +48,7 @@ public class BattleStateMachine : MonoBehaviour
     private int charactersCount = 0;
 
     // Actionable player characters (I.E. not dead) on the field
-    public List<GameObject> HerosToManage = new List<GameObject>();
+    public List<GameObject> HeroesToManage = new List<GameObject>();
 
     // State machine for 
     // Character Action GUI
@@ -70,10 +71,10 @@ public class BattleStateMachine : MonoBehaviour
         // 
         DONE
     }
-    public HeroGUI HeroInput;
+    public HeroGUI PlayerInput;
 
     // Turn data for player character to be added to turn list
-    private HandleTurn heroChoice;
+    private HandleTurn herosChoice;
 
     // GUI Objects in Unity
     // - - -
@@ -92,67 +93,67 @@ public class BattleStateMachine : MonoBehaviour
 	// Use this for initialization
 	private void Start ()
     {
-        BattleStates = PerformAction.WAIT;
-        HerosInBattle.AddRange(GameObject.FindGameObjectsWithTag("Hero"));
+        BattleState = ActionState.WAIT;
+        HeroesInBattle.AddRange(GameObject.FindGameObjectsWithTag("Hero"));
 
-        EnemysInBattle.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
-        EnemysInBattle.Sort(SortEnemiesByName);
+        EnemiesInBattle.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+        EnemiesInBattle.Sort(SortEnemiesByName);
 
-        HeroInput = HeroGUI.ACTIVATE;
+        PlayerInput = HeroGUI.ACTIVATE;
 
         AttackPanel.SetActive(false);
         EnemySelectPanel.SetActive(false);
 
-        EnemyButtons();
+        SetEnemyButtons();
 
-        charactersCount = HerosInBattle.Count + EnemysInBattle.Count;
+        charactersCount = HeroesInBattle.Count + EnemiesInBattle.Count;
     }
 	
 	// Update is called once per frame
 	private void Update ()
     {
-        if (PerformList.Count == charactersCount)
+        if (PerformersList.Count == charactersCount)
         {
-            ExecutePerformList = new List<HandleTurn>(PerformList);
-            SortTurnOrder(ExecutePerformList);
-            PerformList.Clear();
+            ExecutePerformersList = new List<HandleTurn>(PerformersList);
+            SortTurnOrder(ExecutePerformersList);
+            PerformersList.Clear();
         }//*/
 
-		switch (BattleStates)
+		switch (BattleState)
         {
-            case (PerformAction.WAIT):
+            case (ActionState.WAIT):
                 {
                     // if at least one character has 
                     // pushed action data to turn list
-                    if (ExecutePerformList.Count > 0)
+                    if (ExecutePerformersList.Count > 0)
                     {
-                        BattleStates = PerformAction.TAKEACTION;
-                        Debug.Log("TAKEACTION started");
+                        BattleState = ActionState.TAKEACTION;
+                        Debug.Log("TAKEACTION Started");
                     }
                     break;
                 }
-            case (PerformAction.TAKEACTION):
+            case (ActionState.TAKEACTION):
                 {
-                    GameObject performer = GameObject.Find(ExecutePerformList[0].Attacker);
+                    GameObject performer = GameObject.Find(ExecutePerformersList[0].AttackersName);
 
-                    if (ExecutePerformList[0].Type == "Enemy")
+                    if (ExecutePerformersList[0].Type == "Enemy")
                     {
                         EnemyStateMachine esm = performer.GetComponent<EnemyStateMachine>();
-                        esm.HeroToAttack = ExecutePerformList[0].AttackersTarget;
+                        esm.HeroToAttack = ExecutePerformersList[0].AttackersTarget;
                         esm.CurrentState = EnemyStateMachine.TurnState.ACTION;
                     }
-                    if (ExecutePerformList[0].Type == "Hero")
+                    if (ExecutePerformersList[0].Type == "Hero")
                     {
                         HeroStateMachine hsm = performer.GetComponent<HeroStateMachine>();
-                        hsm.EnemyToAttack = ExecutePerformList[0].AttackersTarget;
+                        hsm.EnemyToAttack = ExecutePerformersList[0].AttackersTarget;
                         hsm.CurrentState = HeroStateMachine.TurnState.ACTION;
                     }
 
-                    BattleStates = PerformAction.PERFORMACTION;
+                    BattleState = ActionState.PERFORMACTION;
 
                     break;
                 }
-            case (PerformAction.PERFORMACTION):
+            case (ActionState.PERFORMACTION):
                 {
                     // placeholder state while
                     // characters perform action
@@ -160,19 +161,19 @@ public class BattleStateMachine : MonoBehaviour
                     // when action is completed
                     break;
                 }
-        }   // switch (BattleStates)
+        }   // switch (BattleState)
 
-        switch (HeroInput)
+        switch (PlayerInput)
         {
             case (HeroGUI.ACTIVATE):
                 {
-                    if (HerosToManage.Count > 0 && ExecutePerformList.Count == 0)
+                    if (HeroesToManage.Count > 0 && ExecutePerformersList.Count == 0)
                     {
-                        HerosToManage.Sort(SortHeroesByPriority);
-                        HerosToManage[0].transform.Find("Selector").gameObject.SetActive(true);
-                        heroChoice = new HandleTurn();
+                        HeroesToManage.Sort(SortHeroesByTurnPriority);
+                        HeroesToManage[0].transform.Find("Selector").gameObject.SetActive(true);
+                        herosChoice = new HandleTurn();
                         AttackPanel.SetActive(true);
-                        HeroInput = HeroGUI.WAITING;
+                        PlayerInput = HeroGUI.WAITING;
                     }
                     break;
                 }
@@ -206,31 +207,31 @@ public class BattleStateMachine : MonoBehaviour
     // they can be added to turn list
     public void CollectActions(HandleTurn input)
     {
-        PerformList.Add(input);
+        PerformersList.Add(input);
     }
 
     // Retrieves information about every enemy character
     // on the field and adds them to enemy selction GUI
-    private void EnemyButtons()
+    private void SetEnemyButtons()
     {
-        foreach(GameObject enemy in EnemysInBattle)
+        foreach(GameObject enemy in EnemiesInBattle)
         {
             GameObject newButton = Instantiate(EnemyButton) as GameObject;
             EnemySelectButton button = newButton.GetComponent<EnemySelectButton>();
 
-            EnemyStateMachine cur_enemy = enemy.GetComponent<EnemyStateMachine>();
+            EnemyStateMachine currentEnemy = enemy.GetComponent<EnemyStateMachine>();
             Debug.Log("Enemy Found");
 
-            Debug.Log(cur_enemy.Enemy.Name);
+            Debug.Log(currentEnemy.Enemy.Name);
 
             Text buttonText = newButton.transform.Find("Text").gameObject.GetComponent<Text>();
-            Debug.Log("Button Text Found");
+            Debug.Log("Enemy Target Button Text Found");
 
             button.EnemyPrefab = enemy;
-            Debug.Log("Button Prefab Set");
+            Debug.Log("Enemy Target Button Prefab Set");
 
-            buttonText.text = cur_enemy.Enemy.Name;
-            Debug.Log("Button Text Set");
+            buttonText.text = currentEnemy.Enemy.Name;
+            Debug.Log("Enemy Target Button Text Set");
             
             newButton.transform.SetParent(Spacer, false);
         }
@@ -240,26 +241,26 @@ public class BattleStateMachine : MonoBehaviour
     // Called by player button to specify
     // specify which action they want a
     // character to take
-    public void Input1()
+    public void PlayerActionInput()
     {
-        heroChoice.Attacker = HerosToManage[0].name;
-        heroChoice.AttackersGameObject = HerosToManage[0];
-        heroChoice.Type = "Hero";
-        heroChoice.Priority = HerosToManage[0].GetComponent<HeroStateMachine>().Hero.Priority;
+        herosChoice.AttackersName = HeroesToManage[0].name;
+        herosChoice.AttackersGameObject = HeroesToManage[0];
+        herosChoice.Type = "Hero";
+        herosChoice.TurnPriority = HeroesToManage[0].GetComponent<HeroStateMachine>().Hero.TurnPriority;
 
         AttackPanel.SetActive(false);
         EnemySelectPanel.SetActive(true);
-        Debug.Log("Input1");
+        Debug.Log("Player Action Selected");
     }
 
     // Target selection
     // Called by player button to specify
     // what they want their action to affect
-    public void Input2(GameObject ChosenEnemy)
+    public void PlayerTargetInput(GameObject ChosenEnemy)
     {
-        heroChoice.AttackersTarget = ChosenEnemy;
-        HeroInput = HeroGUI.DONE;
-        Debug.Log("Input2");
+        herosChoice.AttackersTarget = ChosenEnemy;
+        PlayerInput = HeroGUI.DONE;
+        Debug.Log("Action Target Selected");
     }
 
     // Adds player characters to turn list,
@@ -268,11 +269,11 @@ public class BattleStateMachine : MonoBehaviour
     // and resets action GUI
     private void HeroInputDone()
     {
-        PerformList.Add(heroChoice);
+        PerformersList.Add(herosChoice);
         EnemySelectPanel.SetActive(false);
-        HerosToManage[0].transform.Find("Selector").gameObject.SetActive(false);
-        HerosToManage.RemoveAt(0);
-        HeroInput = HeroGUI.ACTIVATE;
+        HeroesToManage[0].transform.Find("Selector").gameObject.SetActive(false);
+        HeroesToManage.RemoveAt(0);
+        PlayerInput = HeroGUI.ACTIVATE;
         Debug.Log("HeroInputDone");
     }
 
@@ -282,7 +283,7 @@ public class BattleStateMachine : MonoBehaviour
     // and sorts them by their priority
     private List<HandleTurn> SortTurnOrder(List<HandleTurn> Actors)
     {
-        Actors.Sort(SortCharactersByPriority);
+        Actors.Sort(SortCharactersByTurnPriority);
 
         return Actors;
     }
@@ -292,9 +293,9 @@ public class BattleStateMachine : MonoBehaviour
     // Party characters: 2-5
     // Boss characters : +10
     // Standard enemies: +50
-    private static int SortCharactersByPriority(HandleTurn h1, HandleTurn h2)
+    private static int SortCharactersByTurnPriority(HandleTurn h1, HandleTurn h2)
     {
-        return h1.Priority.CompareTo(h2.Priority);
+        return h1.TurnPriority.CompareTo(h2.TurnPriority);
 
         //return 0;
     }//*/
@@ -306,8 +307,8 @@ public class BattleStateMachine : MonoBehaviour
     }
 
     // Sort player characters by priority (for GUI)
-    private static int SortHeroesByPriority(GameObject h1, GameObject h2)
+    private static int SortHeroesByTurnPriority(GameObject h1, GameObject h2)
     {
-        return h1.GetComponent<HeroStateMachine>().Hero.Priority.CompareTo(h2.GetComponent<HeroStateMachine>().Hero.Priority);
+        return h1.GetComponent<HeroStateMachine>().Hero.TurnPriority.CompareTo(h2.GetComponent<HeroStateMachine>().Hero.TurnPriority);
     }
 }

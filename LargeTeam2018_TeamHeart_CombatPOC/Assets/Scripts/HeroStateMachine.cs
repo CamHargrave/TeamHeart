@@ -33,14 +33,13 @@ public class HeroStateMachine : MonoBehaviour
 
     private bool actionStarted = false;
 
-    private float animSpeed = 10f;
+    private float animationSpeed = 10f;
 
     // Use this for initialization
     void Start ()
     {
         startPosition = transform.position;
         //cur_cooldown = Random.Range(0, 2.5f);
-
         bsm = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
         CurrentState = TurnState.PROCESSING;
         Selector.SetActive(false);
@@ -61,7 +60,7 @@ public class HeroStateMachine : MonoBehaviour
                 }
             case (TurnState.ADDTOLIST):
                 {
-                    bsm.HerosToManage.Add(this.gameObject);
+                    bsm.HeroesToManage.Add(this.gameObject);
                     CurrentState = TurnState.WAITING;
                     break;
                 }
@@ -127,10 +126,10 @@ public class HeroStateMachine : MonoBehaviour
         while (moveTowards(firstPosition)) { yield return null; }
 
         // remove this performer from the list in the BattleStateMachine (BSM)
-        bsm.ExecutePerformList.RemoveAt(0);
+        bsm.ExecutePerformersList.RemoveAt(0);
 
         // reset bsm -> wait
-        bsm.BattleStates = BattleStateMachine.PerformAction.WAIT;
+        bsm.BattleState = BattleStateMachine.ActionState.WAIT;
 
         // end coroutine
         actionStarted = false;
@@ -142,6 +141,16 @@ public class HeroStateMachine : MonoBehaviour
 
     private bool moveTowards(Vector3 target)
     {
-        return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
+        return target != (transform.position = Vector3.MoveTowards(transform.position, target, animationSpeed * Time.deltaTime));
     }
+
+    public void TakeDamage(float damageAmount)
+    {
+        Hero.CurrentHP -= damageAmount;
+        if (Hero.CurrentHP <= 0)
+        {
+            CurrentState = TurnState.DEAD;
+        }
+    }
+
 }   // PUBLIC CLASS

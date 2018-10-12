@@ -97,19 +97,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemy:
     Name: Enemy 2
-    EnemyType: 2
-    EnemyRarity: 0
+    TurnPriority: 0
+    ActionSet: 0
+    PerformedAction: 0
+    Selector: {fileID: 0}
     BaseHP: 25
     CurrentHP: 25
     BaseMP: 20
     CurrentMP: 20
-    Stamina: 0
-    Intellect: 0
-    Dexterity: 0
-    Agility: 0
     BaseATK: 8
     CurrentATK: 8
     BaseDEF: 3
     CurrentDEF: 3
+    Stamina: 0
+    Intellect: 0
+    Dexterity: 0
+    Agility: 0
+    EnemyType: 2
+    EnemyRarity: 0
   CurrentState: 0
+  Selector: {fileID: 1502518193058484, guid: bcf6807849bc51549a299f7d6abd5a5f, type: 2}
   HeroToAttack: {fileID: 0}
