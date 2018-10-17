@@ -25,7 +25,7 @@ public class HeroStateMachine : MonoBehaviour
 
     //public Image ProgressBar;
 
-    public GameObject Selector;
+    private GameObject selector;
 
     public GameObject EnemyToAttack;
 
@@ -42,7 +42,8 @@ public class HeroStateMachine : MonoBehaviour
         //cur_cooldown = Random.Range(0, 2.5f);
         bsm = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
         CurrentState = TurnState.PROCESSING;
-        Selector.SetActive(false);
+        selector = Hero.Selector;
+        selector.SetActive(false);
 
     }   // VOID START
 

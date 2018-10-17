@@ -25,7 +25,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     private bool actionStarted = false;
 
-    public GameObject Selector;
+    private GameObject selector;
 
     public GameObject HeroToAttack;
 
@@ -37,7 +37,8 @@ public class EnemyStateMachine : MonoBehaviour
         startPosition = transform.position;
         CurrentState = TurnState.PROCESSING;
         bsm = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
-        Selector.SetActive(false);
+        selector = Enemy.Selector;
+        selector.SetActive(false);
     }
 	
 	// Update is called once per frame
