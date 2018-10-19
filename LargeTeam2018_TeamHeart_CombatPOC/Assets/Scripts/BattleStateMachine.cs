@@ -139,7 +139,14 @@ public class BattleStateMachine : MonoBehaviour
                     if (ExecutePerformersList[0].Type == "Enemy")
                     {
                         EnemyStateMachine esm = performer.GetComponent<EnemyStateMachine>();
+
+                        // Check if target is still alive
+                        if (HeroesInBattle.Count > 0) { esm.CheckTargetDead(ExecutePerformersList[0]); }
+
+                        // Set Enemy's current target
                         esm.HeroToAttack = ExecutePerformersList[0].AttackersTarget;
+
+                        // Attack Target
                         esm.CurrentState = EnemyStateMachine.TurnState.ACTION;
                     }
                     if (ExecutePerformersList[0].Type == "Hero")
@@ -310,5 +317,29 @@ public class BattleStateMachine : MonoBehaviour
     private static int SortHeroesByTurnPriority(GameObject h1, GameObject h2)
     {
         return h1.GetComponent<HeroStateMachine>().Hero.TurnPriority.CompareTo(h2.GetComponent<HeroStateMachine>().Hero.TurnPriority);
+    }
+
+    public void IncrementCharactersCount(int increment = 1)
+    {
+        if (increment <= 0)
+        {
+            Debug.Log("Tried to increment with a non-positive value.");
+            return;
+        }
+
+        charactersCount += increment;
+        return;
+    }
+
+    public void DecrementCharactersCount(int decrement = -1)
+    {
+        if (decrement >= 0)
+        {
+            Debug.Log("Tried to decrement with a non-negative value.");
+            return;
+        }
+
+        charactersCount += decrement;
+        return;
     }
 }

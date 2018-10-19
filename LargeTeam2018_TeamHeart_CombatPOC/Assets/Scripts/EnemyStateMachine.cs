@@ -54,7 +54,7 @@ public class EnemyStateMachine : MonoBehaviour
                 }
             case (TurnState.CHOOSEACTION):
                 {
-                    ChooseAction();
+                    if (bsm.HeroesInBattle.Count > 0) { ChooseAction(); }
                     CurrentState = TurnState.WAITING;
                     break;
                 }
@@ -105,19 +105,22 @@ public class EnemyStateMachine : MonoBehaviour
         actionStarted = true;
         Debug.Log("Enemy Action Started");
 
-        // animate the enemy near the hero to attack
-        Vector3 heroPosition = new Vector3(HeroToAttack.transform.position.x, HeroToAttack.transform.position.y, HeroToAttack.transform.position.z + 1.0f);
-        while (moveTowards(heroPosition)) { yield return null; }
+        if (bsm.HeroesInBattle.Count > 0)
+        {
+            // animate the enemy near the hero to attack
+            Vector3 heroPosition = new Vector3(HeroToAttack.transform.position.x, HeroToAttack.transform.position.y, HeroToAttack.transform.position.z + 1.0f);
+            while (moveTowards(heroPosition)) { yield return null; }
 
-        // wait
-        yield return new WaitForSeconds(0.5f);
+            // wait
+            yield return new WaitForSeconds(0.5f);
 
-        // do damage
-        doDamage();
+            // do damage
+            doDamage();
 
-        // back to start position
-        Vector3 firstPosition = startPosition;
-        while (moveTowards(firstPosition)) { yield return null; }
+            // back to start position
+            Vector3 firstPosition = startPosition;
+            while (moveTowards(firstPosition)) { yield return null; }
+        }
 
         // remove this performer from the list in the BattleStateMachine (BSM)
         bsm.ExecutePerformersList.RemoveAt(0);
@@ -143,5 +146,20 @@ public class EnemyStateMachine : MonoBehaviour
         float calculatedDamage = Enemy.CurrentATK + bsm.ExecutePerformersList[0].ChosenAttack.AttackBaseDamage;
 
         HeroToAttack.GetComponent<HeroStateMachine>().TakeDamage(calculatedDamage);
+    }
+
+    public void CheckTargetDead(HandleTurn myAttack)
+    {
+        for (int i = 0; i < bsm.HeroesInBattle.Count; ++i)
+        {
+           if (myAttack.AttackersTarget == bsm.HeroesInBattle[i])
+            {
+                // If the enemy's attack target is still active, return
+                return;
+            }
+        }
+
+        myAttack.AttackersTarget = bsm.HeroesInBattle[Random.Range(0, bsm.HeroesInBattle.Count)];
+        Debug.Log(this.gameObject.name + " switched targets to " + myAttack.AttackersTarget.name);
     }
 }

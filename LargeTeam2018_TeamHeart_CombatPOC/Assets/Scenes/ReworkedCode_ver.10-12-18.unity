@@ -1995,6 +1995,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 114451762503103360, guid: e4bd138eaa8aff840ac919bb363672db,
+        type: 2}
+      propertyPath: Enemy.BaseATK
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114451762503103360, guid: e4bd138eaa8aff840ac919bb363672db,
+        type: 2}
+      propertyPath: Enemy.CurrentATK
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e4bd138eaa8aff840ac919bb363672db, type: 2}
   m_IsPrefabParent: 0
