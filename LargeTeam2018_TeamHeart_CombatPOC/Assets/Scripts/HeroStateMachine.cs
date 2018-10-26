@@ -173,6 +173,7 @@ public class HeroStateMachine : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         // do damage
+        doDamage();
 
         // back to start position
         Vector3 firstPosition = startPosition;
@@ -204,6 +205,28 @@ public class HeroStateMachine : MonoBehaviour
         {
             CurrentState = TurnState.DEAD;
         }
+    }
+
+    private void doDamage()
+    {
+        float calculatedDamage = Hero.CurrentATK + Hero.Attacks[0].AttackBaseDamage;
+
+        EnemyToAttack.GetComponent<EnemyStateMachine>().TakeDamage(calculatedDamage);
+    }
+
+    public void CheckTargetDead(HandleTurn myAttack)
+    {
+        for (int i = 0; i < bsm.HeroesInBattle.Count; ++i)
+        {
+            if (myAttack.AttackersTarget == bsm.EnemiesInBattle[i])
+            {
+                // If the hero's attack target is still active, return
+                return;
+            }
+        }
+
+        myAttack.AttackersTarget = bsm.EnemiesInBattle[Random.Range(0, bsm.EnemiesInBattle.Count)];
+        Debug.Log(this.gameObject.name + " switched targets to " + myAttack.AttackersTarget.name);
     }
 
 }   // PUBLIC CLASS

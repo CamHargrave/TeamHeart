@@ -31,6 +31,9 @@ public class EnemyStateMachine : MonoBehaviour
 
     private float animationSpeed = 10f;
 
+    [SerializeField]
+    private bool alive = true;
+
     // Use this for initialization
     void Start ()
     {
@@ -70,6 +73,43 @@ public class EnemyStateMachine : MonoBehaviour
                 }
             case (TurnState.DEAD):
                 {
+                    if (!alive)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        // change tag to dead
+                        this.gameObject.tag = "DeadEnemy";
+
+                        // cannot be attacked by enemy
+                        bsm.EnemiesInBattle.Remove(this.gameObject);
+
+                        // deactivate selector
+                        selector.SetActive(false);
+
+                        // remove item from performList
+                        for (int i = 0; i < bsm.PerformersList.Count; ++i)
+                        {
+                            if (bsm.PerformersList[i].AttackersGameObject == this.gameObject)
+                            {
+                                bsm.PerformersList.Remove(bsm.PerformersList[i]);
+                            }
+                        }
+
+                        // death animation
+
+                        // // PLACEHOLDER FUNCITON UNTIL DEATH ANIMATIONS ARE IMPLEMENTED // 
+                        this.gameObject.GetComponent<MeshRenderer>().material.color = new Color32(0, 0, 0, 64);
+
+                        // decrement characters list
+                        bsm.DecrementCharactersCount();
+                        Debug.Log("charactersCount decremented.");
+
+                        alive = false;
+                        Debug.Log("alive = false");
+                    }
+
                     break;
                 }
             default:
@@ -139,6 +179,15 @@ public class EnemyStateMachine : MonoBehaviour
     private bool moveTowards(Vector3 target)
     {
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animationSpeed * Time.deltaTime));
+    }
+
+    public void TakeDamage(float damageAmount)
+    {
+        Enemy.CurrentHP -= damageAmount;
+        if (Enemy.CurrentHP <= 0)
+        {
+            CurrentState = TurnState.DEAD;
+        }
     }
 
     private void doDamage()

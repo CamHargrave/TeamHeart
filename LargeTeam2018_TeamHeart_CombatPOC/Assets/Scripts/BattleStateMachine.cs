@@ -152,6 +152,9 @@ public class BattleStateMachine : MonoBehaviour
                     if (ExecutePerformersList[0].Type == "Hero")
                     {
                         HeroStateMachine hsm = performer.GetComponent<HeroStateMachine>();
+
+                        if (EnemiesInBattle.Count > 0) { hsm.CheckTargetDead(ExecutePerformersList[0]); }
+
                         hsm.EnemyToAttack = ExecutePerformersList[0].AttackersTarget;
                         hsm.CurrentState = HeroStateMachine.TurnState.ACTION;
                     }

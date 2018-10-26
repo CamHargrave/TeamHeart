@@ -1360,6 +1360,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 114490716862159744, guid: 3bee258563ba9b744beb5be76ecb4c49,
+        type: 2}
+      propertyPath: Hero.BaseATK
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114490716862159744, guid: 3bee258563ba9b744beb5be76ecb4c49,
+        type: 2}
+      propertyPath: Hero.CurrentATK
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3bee258563ba9b744beb5be76ecb4c49, type: 2}
   m_IsPrefabParent: 0
