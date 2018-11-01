@@ -7,6 +7,7 @@ public class HeroStateMachine : MonoBehaviour
 {
     private BattleStateMachine bsm;
     public BaseHero Hero;
+    AudioSource audioData;
 
     public enum TurnState
     {
@@ -187,6 +188,10 @@ public class HeroStateMachine : MonoBehaviour
         // animate the enemy near the hero to attack
         Vector3 heroPosition = new Vector3(EnemyToAttack.transform.position.x, EnemyToAttack.transform.position.y, EnemyToAttack.transform.position.z - 1.0f);
         while (moveTowards(heroPosition)) { yield return null; }
+
+        audioData = GetComponent<AudioSource>();
+        audioData.Play(0);
+
 
         // wait
         yield return new WaitForSeconds(0.5f);
