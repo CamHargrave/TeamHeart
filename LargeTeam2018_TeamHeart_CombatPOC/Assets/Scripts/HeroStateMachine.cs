@@ -38,6 +38,10 @@ public class HeroStateMachine : MonoBehaviour
     [SerializeField]
     private bool alive = true;
 
+    public bool Guard = false;
+
+    public ActionType Action = ActionType.NULL;
+
     // Use this for initialization
     void Start ()
     {
@@ -79,7 +83,20 @@ public class HeroStateMachine : MonoBehaviour
                 }//*/
             case (TurnState.ACTION):
                 {
-                    StartCoroutine(timeForAction());
+                    // Resets hero's defense after guarding 
+                    Hero.CurrentDEF = Hero.BaseDEF;
+
+                    if (bsm.EnemiesInBattle.Count > 0)
+                    {
+                        if (Action == ActionType.GUARD)
+                        {
+                            StartCoroutine(guard());
+                        }
+                        else if (Action == ActionType.MELEE_ATTACK)
+                        {
+                            StartCoroutine(timeForAction());
+                        }
+                    }
                     break;
                 }
             case (TurnState.DEAD):
@@ -122,14 +139,14 @@ public class HeroStateMachine : MonoBehaviour
 
                         // reset heroInput
                         bsm.PlayerInput = BattleStateMachine.HeroGUI.ACTIVATE;
-                        Debug.Log("heroInput Reset");
+                        Debug.Log(this.gameObject.name + ".heroInput Reset");
 
                         // decrement characters list
                         bsm.DecrementCharactersCount();
                         Debug.Log("charactersCount decremented.");
 
                         alive = false;
-                        Debug.Log("alive = false");
+                        Debug.Log(this.gameObject.name + ".alive = false");
                     }
 
                     break;
@@ -162,8 +179,10 @@ public class HeroStateMachine : MonoBehaviour
             yield break;
         }
 
+        EnemyToAttack = CheckEnemyDead(EnemyToAttack);
+
         actionStarted = true;
-        Debug.Log("Hero Action Started");
+        Debug.Log(this.gameObject.name + " Action Started");
 
         // animate the enemy near the hero to attack
         Vector3 heroPosition = new Vector3(EnemyToAttack.transform.position.x, EnemyToAttack.transform.position.y, EnemyToAttack.transform.position.z - 1.0f);
@@ -189,7 +208,39 @@ public class HeroStateMachine : MonoBehaviour
         actionStarted = false;
 
         // reset this enemy state
-        Debug.Log("Hero Action Ended");
+        Debug.Log(this.gameObject.name + " Action Ended");
+        CurrentState = TurnState.PROCESSING;
+    }
+
+    private IEnumerator guard()
+    {
+        if (actionStarted)
+        {
+            yield break;
+        }
+
+        actionStarted = true;
+        Debug.Log(this.gameObject.name + " Began guarding.");
+
+        // animate the hero going into a guard position
+
+        // wait
+        yield return new WaitForSeconds(0.5f);
+
+        // Defense up
+        guardUp();
+
+        // remove this performer from the list in the BattleStateMachine (BSM)
+        bsm.ExecutePerformersList.RemoveAt(0);
+
+        // reset bsm -> wait
+        bsm.BattleState = BattleStateMachine.ActionState.WAIT;
+
+        // end coroutine
+        actionStarted = false;
+
+        // reset this enemy state
+        Debug.Log(this.gameObject.name + " Finished setting up guard.");
         CurrentState = TurnState.PROCESSING;
     }
 
@@ -200,8 +251,26 @@ public class HeroStateMachine : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
+        // calculate damage
+        damageAmount -= Hero.CurrentDEF;
+
+        if (damageAmount <= 0)
+        {
+            damageAmount = 1;
+        }
+
+        // take damage
         Hero.CurrentHP -= damageAmount;
-        if (Hero.CurrentHP <= 0)
+        Debug.Log(this.gameObject.name + " took " + damageAmount + " damage!");
+
+        if (Hero.CurrentHP < 0)
+        {
+            Hero.CurrentHP = 0;
+        }
+        Debug.Log(this.gameObject.name + ".HP = " + Hero.CurrentHP);
+
+        // check if the character died
+        if (Hero.CurrentHP == 0)
         {
             CurrentState = TurnState.DEAD;
         }
@@ -227,6 +296,27 @@ public class HeroStateMachine : MonoBehaviour
 
         myAttack.AttackersTarget = bsm.EnemiesInBattle[Random.Range(0, bsm.EnemiesInBattle.Count)];
         Debug.Log(this.gameObject.name + " switched targets to " + myAttack.AttackersTarget.name);
+    }
+
+    public GameObject CheckEnemyDead(GameObject target)
+    {
+        for (int i = 0; i < bsm.EnemiesInBattle.Count; ++i)
+        {
+            if (target == bsm.EnemiesInBattle[i])
+            {
+                // If the hero's attack target is still active, return
+                return target;
+            }
+        }
+
+        target = bsm.EnemiesInBattle[Random.Range(0, bsm.EnemiesInBattle.Count)];
+        Debug.Log(this.gameObject.name + " switched targets to " + target.name);
+        return target;
+    }
+
+    private void guardUp()
+    {
+        Hero.CurrentDEF = Hero.BaseDEF * 1.5f;
     }
 
 }   // PUBLIC CLASS

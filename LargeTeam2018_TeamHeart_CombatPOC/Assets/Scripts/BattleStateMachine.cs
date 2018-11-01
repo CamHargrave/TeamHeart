@@ -90,6 +90,9 @@ public class BattleStateMachine : MonoBehaviour
     // Contains Enemy info
     public GameObject EnemySelectPanel;
 
+    // List containing the enemy select buttons
+    private List<GameObject> ActiveEnemies;
+
 	// Use this for initialization
 	private void Start ()
     {
@@ -153,9 +156,12 @@ public class BattleStateMachine : MonoBehaviour
                     {
                         HeroStateMachine hsm = performer.GetComponent<HeroStateMachine>();
 
-                        if (EnemiesInBattle.Count > 0) { hsm.CheckTargetDead(ExecutePerformersList[0]); }
+                        hsm.Action = ExecutePerformersList[0].Action;
 
-                        hsm.EnemyToAttack = ExecutePerformersList[0].AttackersTarget;
+                        //if (EnemiesInBattle.Count > 0 && hsm.EnemyToAttack != null) { hsm.CheckTargetDead(ExecutePerformersList[0]); }
+
+                        if (hsm.Action != ActionType.GUARD) { hsm.EnemyToAttack = ExecutePerformersList[0].AttackersTarget; }   // review this code when more actions become developed
+
                         hsm.CurrentState = HeroStateMachine.TurnState.ACTION;
                     }
 
@@ -222,7 +228,7 @@ public class BattleStateMachine : MonoBehaviour
 
     // Retrieves information about every enemy character
     // on the field and adds them to enemy selction GUI
-    private void SetEnemyButtons()
+    public void SetEnemyButtons()
     {
         foreach(GameObject enemy in EnemiesInBattle)
         {
@@ -244,6 +250,8 @@ public class BattleStateMachine : MonoBehaviour
             Debug.Log("Enemy Target Button Text Set");
             
             newButton.transform.SetParent(Spacer, false);
+
+            currentEnemy.EnemyButton = button;
         }
     }
 
@@ -251,11 +259,12 @@ public class BattleStateMachine : MonoBehaviour
     // Called by player button to specify
     // specify which action they want a
     // character to take
-    public void PlayerActionInput()
+    public void PlayerActionInput() // Attack
     {
         herosChoice.AttackersName = HeroesToManage[0].name;
         herosChoice.AttackersGameObject = HeroesToManage[0];
         herosChoice.Type = "Hero";
+        herosChoice.Action = ActionType.MELEE_ATTACK;
         herosChoice.TurnPriority = HeroesToManage[0].GetComponent<HeroStateMachine>().Hero.TurnPriority;
 
         AttackPanel.SetActive(false);
@@ -271,6 +280,21 @@ public class BattleStateMachine : MonoBehaviour
         herosChoice.AttackersTarget = ChosenEnemy;
         PlayerInput = HeroGUI.DONE;
         Debug.Log("Action Target Selected");
+    }
+
+    public void Guard()
+    {
+        herosChoice.AttackersName = HeroesToManage[0].name;
+        herosChoice.AttackersGameObject = null;
+        herosChoice.Type = "Hero";
+        herosChoice.Action = ActionType.GUARD;
+        herosChoice.TurnPriority = HeroesToManage[0].GetComponent<HeroStateMachine>().Hero.TurnPriority;
+
+        AttackPanel.SetActive(false);
+        //herosChoice.AttackersTarget = herosChoice.AttackersGameObject;
+        PlayerInput = HeroGUI.DONE;
+        Debug.Log("Player Guard Selected");
+
     }
 
     // Adds player characters to turn list,

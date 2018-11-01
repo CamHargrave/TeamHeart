@@ -20,20 +20,40 @@ public class BaseCharacter
 
     public List<BaseAttack> Attacks = new List<BaseAttack>();
 
-    public float BaseHP = 0.0f;
-    public float CurrentHP = 0.0f;
+    public float BaseHP;
+    public float CurrentHP;
 
-    public float BaseMP = 0.0f;
-    public float CurrentMP = 0.0f;
+    public float BaseMP;
+    public float CurrentMP;
 
-    public float BaseATK = 0.0f;
-    public float CurrentATK = 0.0f;
+    public float BaseATK;
+    public float CurrentATK;
 
-    public float BaseDEF = 0.0f;
-    public float CurrentDEF = 0.0f;
+    public float BaseDEF;
+    public float CurrentDEF;
 
-    public int Stamina = 0;
-    public int Intellect = 0;
-    public int Dexterity = 0;
-    public int Agility = 0;
+    public int Stamina;
+    public int Intellect;
+    public int Dexterity;
+    public int Agility;
+    
+    public BaseCharacter()
+    {
+        BaseHP = 500f;
+        CurrentHP = BaseHP;
+
+        BaseMP = 200f;
+        CurrentMP = BaseMP;
+
+        BaseATK = 100f;
+        CurrentATK = BaseATK;
+
+        BaseDEF = 50f;
+        CurrentDEF = BaseDEF;
+
+        Stamina = 10;
+        Intellect = 10;
+        Dexterity = 10;
+        Agility = 10;
+    }
 }

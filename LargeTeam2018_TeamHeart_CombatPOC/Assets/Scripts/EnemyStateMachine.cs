@@ -9,6 +9,8 @@ public class EnemyStateMachine : MonoBehaviour
 
     private BattleStateMachine bsm;
 
+    public EnemySelectButton EnemyButton;
+
     public enum TurnState
     {
         PROCESSING,
@@ -89,11 +91,11 @@ public class EnemyStateMachine : MonoBehaviour
                         selector.SetActive(false);
 
                         // remove item from performList
-                        for (int i = 0; i < bsm.PerformersList.Count; ++i)
+                        for (int i = 0; i < bsm.ExecutePerformersList.Count; ++i)
                         {
-                            if (bsm.PerformersList[i].AttackersGameObject == this.gameObject)
+                            if (bsm.ExecutePerformersList[i].AttackersGameObject == this.gameObject)
                             {
-                                bsm.PerformersList.Remove(bsm.PerformersList[i]);
+                                bsm.ExecutePerformersList.Remove(bsm.ExecutePerformersList[i]);
                             }
                         }
 
@@ -107,7 +109,7 @@ public class EnemyStateMachine : MonoBehaviour
                         Debug.Log("charactersCount decremented.");
 
                         alive = false;
-                        Debug.Log("alive = false");
+                        Debug.Log(this.gameObject.name + ".alive = false");
                     }
 
                     break;
@@ -143,7 +145,7 @@ public class EnemyStateMachine : MonoBehaviour
         }
 
         actionStarted = true;
-        Debug.Log("Enemy Action Started");
+        Debug.Log(this.gameObject.name + " Action Started");
 
         if (bsm.HeroesInBattle.Count > 0)
         {
@@ -172,7 +174,7 @@ public class EnemyStateMachine : MonoBehaviour
         actionStarted = false;
 
         // reset this enemy state
-        Debug.Log("Enemy Action Ended");
+        Debug.Log(this.gameObject.name + " Action Ended");
         CurrentState = TurnState.PROCESSING;
     }
 
@@ -183,7 +185,18 @@ public class EnemyStateMachine : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
+        // calculate damage
+        damageAmount -= Enemy.CurrentDEF;
+
+        if (damageAmount <= 0)
+        {
+            damageAmount = 1;
+        }
+
+        // take damage
         Enemy.CurrentHP -= damageAmount;
+
+        // check if the character died
         if (Enemy.CurrentHP <= 0)
         {
             CurrentState = TurnState.DEAD;
