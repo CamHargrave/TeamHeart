@@ -113,6 +113,72 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &128858102
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 889870929}
+    m_Modifications:
+    - target: {fileID: 400000, guid: bb45ac64394aa0e4ba035f343fd05949, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.01433482
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: bb45ac64394aa0e4ba035f343fd05949, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.031048428
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: bb45ac64394aa0e4ba035f343fd05949, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.24438417
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: bb45ac64394aa0e4ba035f343fd05949, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5280359
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: bb45ac64394aa0e4ba035f343fd05949, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.47131732
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: bb45ac64394aa0e4ba035f343fd05949, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.49554425
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: bb45ac64394aa0e4ba035f343fd05949, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.50346196
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: bb45ac64394aa0e4ba035f343fd05949, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: bb45ac64394aa0e4ba035f343fd05949, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.6667805
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: bb45ac64394aa0e4ba035f343fd05949, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.66678
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: bb45ac64394aa0e4ba035f343fd05949, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.66678
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: bb45ac64394aa0e4ba035f343fd05949, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -176.298
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: bb45ac64394aa0e4ba035f343fd05949, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -89.890015
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: bb45ac64394aa0e4ba035f343fd05949, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 87.199
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: bb45ac64394aa0e4ba035f343fd05949, type: 3}
+  m_IsPrefabParent: 0
 --- !u!1001 &160988226
 Prefab:
   m_ObjectHideFlags: 0
@@ -159,6 +225,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e34aefbf5812a194dbad078d5b7a99f0, type: 3}
   m_IsPrefabParent: 0
+--- !u!4 &889870929 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400084, guid: e34aefbf5812a194dbad078d5b7a99f0, type: 3}
+  m_PrefabInternal: {fileID: 160988226}
 --- !u!1 &1092565731
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,7 +279,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 25
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -233,13 +303,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1092565731}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.043146167, y: 0.7838672, z: -0.054815244, w: 0.6169975}
+  m_LocalPosition: {x: -6.56, y: 2.23, z: 1.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 8, y: 103.586006, z: 0}
 --- !u!1 &1509713633 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100070, guid: e34aefbf5812a194dbad078d5b7a99f0, type: 3}
