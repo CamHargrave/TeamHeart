@@ -55,3 +55,4 @@ MonoBehaviour:
   AttackDescription: A fast slash attack with a bladed weapon
   AttackBaseDamage: 10
   AttackCost: 5
+  AttackType: 0
