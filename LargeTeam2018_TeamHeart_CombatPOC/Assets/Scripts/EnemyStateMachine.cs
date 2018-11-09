@@ -157,7 +157,6 @@ public class EnemyStateMachine : MonoBehaviour
 
             audioData = GetComponent<AudioSource>();
             audioData.Play(0);
-
             // wait
             yield return new WaitForSeconds(0.5f);
 
