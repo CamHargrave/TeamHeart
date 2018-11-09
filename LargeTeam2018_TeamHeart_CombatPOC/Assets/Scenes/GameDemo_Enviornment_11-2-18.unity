@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4433948, g: 0.4926718, b: 0.5722995, a: 1}
+  m_IndirectSpecularColor: {r: 0.44759542, g: 0.49756563, b: 0.57535064, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1515,7 +1515,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.99
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -1523,7 +1523,7 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 1
+    m_Strength: 0.74
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
@@ -1547,13 +1547,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 170076733}
-  m_LocalRotation: {x: 0.48820508, y: -0.24376123, z: 0.086992726, w: 0.8334678}
+  m_LocalRotation: {x: 0.73696375, y: -0.089128785, z: 0.5100322, w: 0.4345202}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 58.894, y: -38.471, z: -10.371}
+  m_LocalEulerAnglesHint: {x: 47.001003, y: 98.61201, z: 152.787}
 --- !u!1 &170264274
 GameObject:
   m_ObjectHideFlags: 0
@@ -3948,13 +3948,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_LocalRotation: {x: 0.17061763, y: 0.38266933, z: -0.08480039, w: 0.90402585}
-  m_LocalPosition: {x: -7.8, y: 5.9, z: -9.4}
+  m_LocalRotation: {x: 0.29214206, y: 0.48794115, z: -0.16367596, w: 0.8060872}
+  m_LocalPosition: {x: -15.7, y: 15.56, z: -13.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 21.925001, y: 45.613003, z: -1.4050001}
+  m_LocalEulerAnglesHint: {x: 39.103, y: 62.931004, z: 1.567}
 --- !u!82 &534669906
 AudioSource:
   m_ObjectHideFlags: 0
