@@ -1,16 +1,21 @@
 fileFormatVersion: 2
-guid: bb45ac64394aa0e4ba035f343fd05949
+guid: 8a513e2cc79832040a9bb52db531cdc2
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: aiStandardSurface1
+    2100000: NormieAxe
     2300000: //RootNode
     3300000: //RootNode
-    4300000: TestAxe
+    4300000: NormieAxe_Low
     2186277476908879412: ImportLogs
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: NormieAxe
+    second: {fileID: 2100000, guid: 7d851209df5bc604d9822638ff7e2f9a, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
