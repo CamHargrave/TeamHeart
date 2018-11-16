@@ -8,6 +8,7 @@ public class HeroStateMachine : MonoBehaviour
     private BattleStateMachine bsm;
     public BaseHero Hero;
     AudioSource audioData;
+    Animator theAnimator;
 
     public enum TurnState
     {
@@ -52,6 +53,7 @@ public class HeroStateMachine : MonoBehaviour
         CurrentState = TurnState.PROCESSING;
         selector = Hero.Selector;
         selector.SetActive(false);
+        theAnimator = GetComponent<Animator>();
 
     }   // VOID START
 
@@ -186,20 +188,32 @@ public class HeroStateMachine : MonoBehaviour
         Debug.Log(this.gameObject.name + " Action Started");
 
         // animate the enemy near the hero to attack
+        theAnimator.SetBool("IsMoving", true);
         Vector3 heroPosition = new Vector3(EnemyToAttack.transform.position.x, EnemyToAttack.transform.position.y, EnemyToAttack.transform.position.z - 1.0f);
         while (moveTowards(heroPosition)) { yield return null; }
 
         audioData = GetComponent<AudioSource>();
         audioData.Play(0);
         // wait
-        yield return new WaitForSeconds(0.5f);
+        theAnimator.SetBool("IsMoving", false);
+        theAnimator.SetBool("BaseAttack", true);
+        yield return new WaitForSeconds(2.0f);
+        // theAnimator.SetBool("IsMoving", false);
+        theAnimator.SetBool("BaseAttack", false);
+
+
 
         // do damage
         doDamage();
+        
 
         // back to start position
+        //theAnimator.SetBool("IsMoving", true);
         Vector3 firstPosition = startPosition;
         while (moveTowards(firstPosition)) { yield return null; }
+        
+       
+        theAnimator.SetBool("IsMoving", false);
 
         // remove this performer from the list in the BattleStateMachine (BSM)
         bsm.ExecutePerformersList.RemoveAt(0);
@@ -226,9 +240,10 @@ public class HeroStateMachine : MonoBehaviour
         Debug.Log(this.gameObject.name + " Began guarding.");
 
         // animate the hero going into a guard position
+        theAnimator.SetBool("IsGuarding", true);
 
         // wait
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.0f);
 
         // Defense up
         guardUp();
@@ -244,6 +259,7 @@ public class HeroStateMachine : MonoBehaviour
 
         // reset this enemy state
         Debug.Log(this.gameObject.name + " Finished setting up guard.");
+        theAnimator.SetBool("IsGuarding", false);
         CurrentState = TurnState.PROCESSING;
     }
 
@@ -276,6 +292,8 @@ public class HeroStateMachine : MonoBehaviour
         if (Hero.CurrentHP == 0)
         {
             CurrentState = TurnState.DEAD;
+            theAnimator.SetBool("IsDead", true);
+
         }
     }
 

@@ -1,8 +1,120 @@
 fileFormatVersion: 2
 guid: 86290e24aba78fa4dba4b2a98300c536
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
+    100000: BackSpike
+    100002: BackSpike2
+    100004: BackSpike3
+    100006: //RootNode
+    100008: Head
+    100010: ikHandle1
+    100012: ikHandle2
+    100014: ikHandle3
+    100016: ikHandle4
+    100018: joint1
+    100020: joint2
+    100022: joint3
+    100024: joint4
+    100026: joint5
+    100028: joint6
+    100030: joint7
+    100032: joint8
+    100034: joint9
+    100036: Rock1
+    100038: Rock10
+    100040: Rock11
+    100042: Rock12
+    100044: Rock13
+    100046: Rock14
+    100048: Rock15
+    100050: Rock2
+    100052: Rock3
+    100054: Rock4
+    100056: Rock5
+    100058: Rock6
+    100060: Rock7
+    100062: Rock8
+    100064: Rock9
+    100066: Rock_Companion
+    100068: transform1
+    100070: transform10
+    100072: transform11
+    100074: transform12
+    100076: transform13
+    100078: transform14
+    100080: transform15
+    100082: transform16
+    100084: transform17
+    100086: transform18
+    100088: transform19
+    100090: transform2
+    100092: transform3
+    100094: transform4
+    100096: transform5
+    100098: transform6
+    100100: transform7
+    100102: transform8
+    100104: transform9
+    400000: BackSpike
+    400002: BackSpike2
+    400004: BackSpike3
+    400006: //RootNode
+    400008: Head
+    400010: ikHandle1
+    400012: ikHandle2
+    400014: ikHandle3
+    400016: ikHandle4
+    400018: joint1
+    400020: joint2
+    400022: joint3
+    400024: joint4
+    400026: joint5
+    400028: joint6
+    400030: joint7
+    400032: joint8
+    400034: joint9
+    400036: Rock1
+    400038: Rock10
+    400040: Rock11
+    400042: Rock12
+    400044: Rock13
+    400046: Rock14
+    400048: Rock15
+    400050: Rock2
+    400052: Rock3
+    400054: Rock4
+    400056: Rock5
+    400058: Rock6
+    400060: Rock7
+    400062: Rock8
+    400064: Rock9
+    400066: Rock_Companion
+    400068: transform1
+    400070: transform10
+    400072: transform11
+    400074: transform12
+    400076: transform13
+    400078: transform14
+    400080: transform15
+    400082: transform16
+    400084: transform17
+    400086: transform18
+    400088: transform19
+    400090: transform2
+    400092: transform3
+    400094: transform4
+    400096: transform5
+    400098: transform6
+    400100: transform7
+    400102: transform8
+    400104: transform9
+    2100000: Rock_Texture1
+    2100002: Rock_Texture_2
+    4300000: Rock_Companion
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Rock_Companion
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
@@ -38,6 +150,7 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -55,11 +168,16 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
@@ -74,7 +192,6 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
