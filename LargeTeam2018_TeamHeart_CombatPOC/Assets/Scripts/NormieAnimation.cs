@@ -25,6 +25,9 @@ public class NormieAnimation : MonoBehaviour {
 		bool baseAttackPressed = Input.GetKeyDown("space");
 		m_animator.SetBool("BaseAttack", baseAttackPressed);
 
+		bool sliceAttackPressed = Input.GetKeyDown("x");
+		m_animator.SetBool("SliceAttack", sliceAttackPressed);
+
 		////When holding down we character is guarding. When flase it goes back to idle. 
 		bool isGuardingPressed = Input.GetKey("e");
 		m_animator.SetBool("IsGuarding", isGuardingPressed);
@@ -32,6 +35,8 @@ public class NormieAnimation : MonoBehaviour {
 		//when key pressed character does death animation but doesnt come back to idle state.
 		bool isDeadPressed = Input.GetKeyDown("q");
 		m_animator.SetBool("IsDead", isDeadPressed);
+
+		
 
 
 	}
