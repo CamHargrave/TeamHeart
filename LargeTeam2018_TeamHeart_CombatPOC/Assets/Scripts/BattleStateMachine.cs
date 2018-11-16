@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 // Public actions mean that they are accessed by another class object
@@ -126,6 +127,8 @@ public class BattleStateMachine : MonoBehaviour
         {
             case (ActionState.WAIT):
                 {
+                    winLoseCheck();
+
                     // if at least one character has 
                     // pushed action data to turn list
                     if (ExecutePerformersList.Count > 0)
@@ -367,6 +370,20 @@ public class BattleStateMachine : MonoBehaviour
         }
 
         charactersCount += decrement;
+        return;
+    }
+
+    private void winLoseCheck()
+    {
+        if (EnemiesInBattle.Count <= 0)
+        {
+            SceneManager.LoadScene(2);
+        }
+        else if (HeroesInBattle.Count <= 0)
+        {
+            SceneManager.LoadScene(1);
+        }
+
         return;
     }
 }
