@@ -136,7 +136,7 @@ public class HeroStateMachine : MonoBehaviour
                         // death animation
 
                         // // PLACEHOLDER FUNCITON UNTIL DEATH ANIMATIONS ARE IMPLEMENTED // 
-                        this.gameObject.GetComponent<MeshRenderer>().material.color = new Color32(0, 0, 0, 64);
+                        //this.gameObject.GetComponent<MeshRenderer>().material.color = new Color32(0, 0, 0, 64);
 
                         // reset heroInput
                         bsm.PlayerInput = BattleStateMachine.HeroGUI.ACTIVATE;
